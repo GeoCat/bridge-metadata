@@ -1,0 +1,43 @@
+<!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
+<qgis version="3.12.2-București">
+  <identifier></identifier>
+  <parentidentifier>test</parentidentifier>
+  <language>ATG</language>
+  <type>dataset</type>
+  <title>test metadata</title>
+  <abstract>This is a test metadata content</abstract>
+  <contact>
+    <name></name>
+    <organization></organization>
+    <position></position>
+    <voice></voice>
+    <fax></fax>
+    <email></email>
+    <role></role>
+  </contact>
+  <links/>
+  <fees></fees>
+  <encoding></encoding>
+  <crs>
+    <spatialrefsys>
+      <wkt></wkt>
+      <proj4></proj4>
+      <srsid>0</srsid>
+      <srid>0</srid>
+      <authid></authid>
+      <description></description>
+      <projectionacronym></projectionacronym>
+      <ellipsoidacronym></ellipsoidacronym>
+      <geographicflag>true</geographicflag>
+    </spatialrefsys>
+  </crs>
+  <extent>
+    <spatial maxx="0" maxz="0" dimensions="2" maxy="0" crs="" miny="0" minz="0" minx="0"/>
+    <temporal>
+      <period>
+        <start></start>
+        <end></end>
+      </period>
+    </temporal>
+  </extent>
+</qgis>
