@@ -10,5 +10,6 @@ setup(
     license="MIT",
     keywords="GeoCat",
     url="",
-    packages=["bridgemetadata"]
+    packages=["bridgemetadata"],
+    entry_points={"console_scripts": ["md2md=bridgemetadata.convert:main"]},
 )
