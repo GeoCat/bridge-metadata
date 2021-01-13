@@ -41,8 +41,6 @@ conversion = {Format.QGIS: {TO: [ISO19139_TO_QMD_XSLT], FROM: [QMD_TO_ISO19139_X
 
 def convert(src, dstformat, srcformat=None, dstfile=None):
 
-    print(src)
-
     if os.path.exists(src):
         dom = ET.parse(src)
     else:
@@ -54,9 +52,6 @@ def convert(src, dstformat, srcformat=None, dstfile=None):
     if srcformat is None:
         raise UnknownFormatException()
 
-    print(srcformat)
-    print(dstformat)
-
     to_conversion = conversion.get(dstformat)[TO]
     from_conversion = conversion.get(srcformat)[FROM]
 
@@ -64,8 +59,6 @@ def convert(src, dstformat, srcformat=None, dstfile=None):
         raise UnimplementedConversionException()
 
     transforms = to_conversion + from_conversion
-
-    print(transforms)
 
     for t in transforms:
         xslt = ET.parse(t)        
@@ -102,7 +95,7 @@ def _detect_format(dom):
         elif "19115" in schemaName:
             return Format.ISO19139
     else:
-        print ("Undetected source format")
+        print ("Unknown source format")
         return None
 
 def main():
