@@ -17,8 +17,13 @@ class Format(Enum):
     QGIS = auto()
     ISO19139 = auto()
     ISO19115 = auto()
+    DCAT = auto()
+    DATACITE = auto()
+    SCHEMA = auto()
     WRAPPING_ISO19115 = auto()
     FGDC = range(5)
+    DIF = auto()
+    EML = auto()
 
 
 def _resource(f):
@@ -27,7 +32,13 @@ def _resource(f):
 TO, FROM = range(2)
 
 QMD_TO_ISO19139_XSLT = _resource("qgis-to-iso19139.xsl")
+ISO19139_TO_SCHEMA = _resource("ISO19139-SCHEMA.xsl")
 ISO19139_TO_QMD_XSLT = _resource("iso19139-to-qgis.xsl")
+ISO19139_TO_DCAT_XSLT = _resource("iso-19139-to-dcat-ap.xsl")
+ISO_TO_DATACITE = _resource("ISO19139-DATASITE.xsl")
+DIF_TO_ISO = _resource("DIF-ISO-2.1.xsl")
+EML_TO_ISO = _resource("eml/eml2iso19139.xsl")
+ISO_TO_EML = _resource("eml/iso2eml.xsl")
 ISO19115_TO_ISO19139_XSLT = _resource("iso19115-to-iso19139.xsl")
 WRAPPING_ISO19115_TO_ISO19139_XSLT = _resource("iso19115-wrapping-to-iso19139.xsl")
 FGDC_TO_ISO19115 = _resource("fgdc-to-iso19115.xsl")
@@ -35,8 +46,13 @@ FGDC_TO_ISO19115 = _resource("fgdc-to-iso19115.xsl")
 conversion = {Format.QGIS: {TO: [ISO19139_TO_QMD_XSLT], FROM: [QMD_TO_ISO19139_XSLT]},
               Format.ISO19139: {TO: [], FROM: []},
               Format.ISO19115: {TO: None, FROM: [ISO19115_TO_ISO19139_XSLT]},
+              Format.DCAT: {TO: [ISO19139_TO_DCAT_XSLT], FROM: None},
+              Format.DATACITE: {TO: [ISO_TO_DATACITE], FROM: None},
+              Format.SCHEMA: {TO: [ISO19139_TO_SCHEMA], FROM: None},
               Format.WRAPPING_ISO19115: {TO: None, FROM: [WRAPPING_ISO19115_TO_ISO19139_XSLT]},
-              Format.FGDC: {TO: None, FROM: [FGDC_TO_ISO19115, ISO19115_TO_ISO19139_XSLT]}
+              Format.FGDC: {TO: None, FROM: [FGDC_TO_ISO19115, ISO19115_TO_ISO19139_XSLT]},
+              Format.DIF: {TO: None, FROM: [DIF_TO_ISO]},
+              Format.EML: {TO: [ISO_TO_EML], FROM: [EML_TO_ISO]},
              }
 
 def convert(src, dstformat, srcformat=None, dstfile=None):
@@ -68,6 +84,7 @@ def convert(src, dstformat, srcformat=None, dstfile=None):
     s = ET.tostring(dom, pretty_print=True).decode()
     if dstfile is not None:        
         with open(dstfile, "w") as f:
+            #only if this is a xml file
             f.write('<?xml version="1.0" encoding="UTF-8"?>\n' + s)
 
     return s
