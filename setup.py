@@ -12,5 +12,5 @@ setup(
     url="",
     packages=["bridgemetadata"],
     include_package_data=True,
-    entry_points={"console_scripts": ["md2md=bridgemetadata.convert:main"]},
+    entry_points={"console_scripts": ["md2md=bridgemetadata.convert:main","md-eval=bridgemetadata.convert:validate"]},
 )

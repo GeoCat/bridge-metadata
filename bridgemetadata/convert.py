@@ -5,6 +5,7 @@ import lxml.etree as ET
 from xml.etree.ElementTree import Element, SubElement
 from xml.etree import ElementTree
 from xml.dom import minidom
+from lxml import isoschematron
 
 class UnimplementedConversionException(Exception):
     pass
@@ -97,6 +98,27 @@ def _detect_format(dom):
     else:
         print ("Unknown source format")
         return None
+
+def validate():
+    if len(sys.argv) != 2:
+        print(
+            "Wrong number of parameters\nUsage: md-eval src"
+        )
+    else:
+        if os.path.exists(sys.argv[1]):
+            dom = ET.parse(sys.argv[1])
+            sch_src = _resource("iso19139.ca.hnap/schematron-rules-common.sch")
+            sch_doc = ET.parse(sch_src)
+            sch = isoschematron.Schematron(sch_doc, store_report = True)
+            validationResult = sch.validate(dom)
+            report = sch.validation_report
+            print("Is valid: " + str(validationResult))
+            if (not validationResult):
+                errors = report.xpath("svrl:failed-assert/svrl:text/text()",namespaces={'svrl':'http://purl.oclc.org/dsdl/svrl'})
+                print(errors)
+        else: 
+            print("File " + sys.argv[1] + " does not exist")
+            return None
 
 def main():
     if len(sys.argv) != 4:
